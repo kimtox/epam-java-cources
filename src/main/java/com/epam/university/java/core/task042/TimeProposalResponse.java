@@ -7,6 +7,11 @@ package com.epam.university.java.core.task042;
 public class TimeProposalResponse implements BookingResponse {
     private String proposedTime;
 
+
+    public TimeProposalResponse(String proposedTime) {
+        this.proposedTime = proposedTime;
+    }
+
     public String getProposedTime() {
         return proposedTime;
     }
