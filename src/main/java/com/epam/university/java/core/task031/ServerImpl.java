@@ -19,14 +19,17 @@ public class ServerImpl implements Server {
     @Override
     public String readMessage() {
         try {
-            Thread.sleep(100);
+            Thread.sleep(50);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         synchronized (this) {
+            if (messages.size() == 0) {
+                return "";
+            }
             String message = messages.poll();
             System.out.println("readMessage() " + message);
-            return (message == null) ? "" : message;
+            return message;
         }
     }
 
@@ -44,8 +47,7 @@ public class ServerImpl implements Server {
         isRunning = false;
         try {
             serverSocket.close();
-            listenerThread.join();
-        } catch (InterruptedException | IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
