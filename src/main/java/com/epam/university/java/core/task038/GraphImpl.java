@@ -10,6 +10,10 @@ public class GraphImpl implements Graph {
     private final List<VertexImpl> listOfVertices = new ArrayList<>();
     private int numOfVertices;
 
+    public GraphImpl(int numOfVertices) {
+        this.numOfVertices = numOfVertices;
+    }
+
     public List<VertexImpl> getListOfVertices() {
         return listOfVertices;
     }
@@ -22,12 +26,11 @@ public class GraphImpl implements Graph {
         this.numOfVertices = numOfVertices;
     }
 
-    public GraphImpl(int numOfVertices) {
-        this.numOfVertices = numOfVertices;
-    }
-
     @Override
     public void createVertex(int id, int x, int y) {
+        if (listOfVertices.size() == numOfVertices) {
+            throw new IllegalArgumentException();
+        }
         VertexImpl vertex = new VertexImpl(id, x, y);
         listOfVertices.add(vertex);
     }
