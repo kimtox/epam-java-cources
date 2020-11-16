@@ -20,6 +20,7 @@ public class ClientImpl implements Client {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        System.out.println("message is sent " + message);
         out.println(message);
     }
 
