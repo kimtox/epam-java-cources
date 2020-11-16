@@ -12,17 +12,18 @@ import java.util.LinkedList;
 public class ServerImpl implements Server {
     private static final int PORT = 7777;
     private Thread listenerThread;
-    private ServerSocket serverSocket;
+    private static ServerSocket serverSocket;
     private boolean isRunning;
-    private Deque<String> messages = new LinkedList<>();
+    private static final Deque<String> messages = new LinkedList<>();
 
     @Override
     public String readMessage() {
         try {
-            Thread.sleep(50);
+            Thread.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         synchronized (this) {
             if (messages.size() == 0) {
                 return "";
@@ -41,13 +42,15 @@ public class ServerImpl implements Server {
 
     @Override
     public void stop() {
+        System.out.println("stop method.");
         if (serverSocket == null) {
             throw new RuntimeException();
         }
         isRunning = false;
         try {
             serverSocket.close();
-        } catch (IOException e) {
+            listenerThread.join();
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
@@ -68,6 +71,7 @@ public class ServerImpl implements Server {
     }
 
     private void clientThreadHandler(Socket socket) {
+        System.out.println("clientThreadHandler is running");
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(
                     socket.getInputStream()));
