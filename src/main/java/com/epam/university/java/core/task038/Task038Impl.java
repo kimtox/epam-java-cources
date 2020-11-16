@@ -22,6 +22,9 @@ public class Task038Impl implements Task038 {
 
     @Override
     public Collection<Vertex> getShortestPath(Graph graph, int startId, int endId) {
+        if (graph == null) {
+            throw new IllegalArgumentException();
+        }
         GraphImpl graph1 = (GraphImpl) graph;
         List<VertexImpl> visitedVertices = new ArrayList<>();
         List<VertexImpl> unvisitedVertices = new ArrayList<>();
